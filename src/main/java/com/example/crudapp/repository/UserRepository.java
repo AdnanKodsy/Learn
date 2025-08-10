@@ -1,6 +1,11 @@
 package com.example.crudapp.repository;
 
-import com.example.crudapp.model.User;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -8,12 +13,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.List;
-import java.util.Optional;
+import com.example.crudapp.model.User;
 
 @Repository
 public class UserRepository {
@@ -22,16 +22,13 @@ public class UserRepository {
     private JdbcTemplate jdbcTemplate;
 
     // Row mapper for User
-    private final RowMapper<User> userRowMapper = new RowMapper<User>() {
-        @Override
-        public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-            User user = new User();
-            user.setId(rs.getLong("id"));
-            user.setName(rs.getString("name"));
-            user.setEmail(rs.getString("email"));
-            user.setAge(rs.getInt("age"));
-            return user;
-        }
+    private final RowMapper<User> userRowMapper = (ResultSet rs, int rowNum) -> {
+        User user = new User();
+        user.setId(rs.getLong("id"));
+        user.setName(rs.getString("name"));
+        user.setEmail(rs.getString("email"));
+        user.setAge(rs.getInt("age"));
+        return user;
     };
 
     // Create user
