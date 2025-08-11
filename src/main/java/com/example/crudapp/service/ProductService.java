@@ -23,17 +23,17 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Optional<Product> getProductById(Long id){
+    public Optional<Product> getProductById(Long id) {
         return productRepository.findById(id);
     }
 
-    public List<Product> searchProductsByName(String productName){
+    public List<Product> searchProductsByName(String productName) {
         return productRepository.findByName(productName);
     }
 
-    public Optional<Product> updateProduct(Long id, Product productDetails){
+    public Optional<Product> updateProduct(Long id, Product productDetails) {
         Optional<Product> existingProduct = productRepository.findById(id);
-        if (existingProduct.isPresent()){
+        if (existingProduct.isPresent()) {
             Product product = existingProduct.get();
             product.setName(productDetails.getName());
             product.setPrice(productDetails.getPrice());
@@ -45,8 +45,12 @@ public class ProductService {
         return Optional.empty();
     }
 
-    public boolean deleteProduct(Long id){
+    public boolean deleteProduct(Long id) {
         return productRepository.deleteById(id);
+    }
+
+    public Long getProductCount() {
+        return productRepository.countProducts();
     }
 
 }
