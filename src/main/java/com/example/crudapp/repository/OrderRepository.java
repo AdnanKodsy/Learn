@@ -81,7 +81,7 @@ public class OrderRepository {
     }
 
     // Count all orders
-    public int countOrders() {
+    public int getOrderCount() {
         String sql = "SELECT COUNT(*) FROM orders";
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class);
         return count != null ? count : 0;
