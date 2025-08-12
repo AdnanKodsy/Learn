@@ -17,14 +17,21 @@ CREATE TABLE IF NOT EXISTS products (
 CREATE TABLE IF NOT EXISTS orders (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
-    product_id BIGINT NOT NULL,
-    quantity INTEGER NOT NULL,
-    total_amount DECIMAL(10,2) NOT NULL,
     order_status VARCHAR(100) NOT NULL,
     order_date DATE NOT NULL,
-    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id),
+    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id)
+);
+CREATE TABLE IF NOT EXISTS order_Items (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    order_id BIGINT NOT NULL,
+    product_id BIGINT NOT NULL,
+    quantity INTEGER NOT NULL,
+    unit_price DECIMAL(10,2) NOT NULL,
+    total_amount DECIMAL(10,2) NOT NULL,
+    CONSTRAINT fk_order FOREIGN KEY (order_id) REFERENCES orders(id),
     CONSTRAINT fk_product FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
 CREATE INDEX idx_orders_user_id ON orders(user_id);
-CREATE INDEX idx_orders_product_id ON orders(product_id);
+CREATE INDEX idx_order_items_order_id ON order_items(order_id);
+CREATE INDEX idx_order_items_product_id ON order_items(product_id);

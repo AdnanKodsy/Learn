@@ -26,9 +26,6 @@ public class OrderRepository {
         Order order = new Order();
         order.setId(rs.getLong("id"));
         order.setUserId(rs.getLong("user_id"));
-        order.setProductId(rs.getLong("product_id"));
-        order.setQuantity(rs.getInt("quantity"));
-        order.setTotalAmount(rs.getBigDecimal("total_amount"));
         order.setOrderStatus(rs.getString("order_status"));
         order.setOrderDate(rs.getDate("order_date"));
         return order;
@@ -37,14 +34,11 @@ public class OrderRepository {
     // Create Order
     public Order save(Order order) {
         if (order.getId() == null) {
-            String sql = "INSERT INTO orders (user_id, product_id, quantity, total_amount, order_status, order_date) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO orders (user_id, order_status, order_date) VALUES (?, ?, ?)";
             KeyHolder keyHolder = new GeneratedKeyHolder();
             jdbcTemplate.update(connection -> {
                 PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 ps.setLong(1, order.getUserId());
-                ps.setLong(2, order.getProductId());
-                ps.setInt(3, order.getQuantity());
-                ps.setBigDecimal(4, order.getTotalAmount());
                 ps.setString(5, order.getOrderStatus());
                 ps.setDate(6, new Date(order.getOrderDate().getTime()));
                 return ps;
@@ -52,9 +46,9 @@ public class OrderRepository {
             order.setId(keyHolder.getKey().longValue());
             return order;
         } else {
-            String sql = "UPDATE orders SET user_id = ?, product_id = ?, quantity = ?, total_amount = ?, order_status = ?, order_date = ? WHERE id = ?";
-            jdbcTemplate.update(sql, order.getUserId(), order.getProductId(), order.getQuantity(),
-                    order.getTotalAmount(), order.getOrderStatus(), new Date(order.getOrderDate().getTime()),
+            String sql = "UPDATE orders SET user_id = ?, order_status = ?, order_date = ? WHERE id = ?";
+            jdbcTemplate.update(sql, order.getUserId(), order.getOrderStatus(),
+                    new Date(order.getOrderDate().getTime()),
                     order.getId());
             return order;
         }
@@ -88,13 +82,13 @@ public class OrderRepository {
     }
 
     // Orders By specific user
-    public List<Order> getOrdersByUser(Long id){
+    public List<Order> getOrdersByUser(Long id) {
         String sql = "SELECT * FROM orders WHERE user_id = ?";
         return jdbcTemplate.query(sql, orderMapper, id);
     }
 
-    //update Order Status
-    public Order updateStatus(Long orderId, String status){
+    // update Order Status
+    public Order updateStatus(Long orderId, String status) {
         String sql = "UPDATE orders SET order_status = ? WHERE id = ?";
         int rowsAffected = jdbcTemplate.update(sql, status, orderId);
         if (rowsAffected > 0) {

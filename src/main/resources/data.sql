@@ -13,10 +13,20 @@ INSERT INTO products (name, description, price, stock_quantity, category, create
 ('Coffee Maker', 'Automatic coffee machine', 90.00, 15, 'Appliances', CURRENT_TIMESTAMP),
 ('Wireless Mouse', 'Bluetooth mouse', 25.00, 100, 'Accessories', CURRENT_TIMESTAMP);
 
--- Insert sample data for orders
-INSERT INTO orders (user_id, product_id, quantity, total_amount, order_status, order_date) VALUES
-(1, 1, 1, 1200.00, 'COMPLETED', CURRENT_DATE),
-(2, 2, 2, 1600.00, 'PENDING', CURRENT_DATE),
-(3, 3, 1, 150.00, 'SHIPPED', CURRENT_DATE),
-(4, 4, 1, 90.00, 'CANCELLED', CURRENT_DATE),
-(1, 5, 3, 75.00, 'COMPLETED', CURRENT_DATE);
+-- Insert sample data for orders (header info only)
+INSERT INTO orders (user_id, order_status, order_date) VALUES
+(1, 'COMPLETED', CURRENT_DATE),
+(2, 'PENDING', CURRENT_DATE),
+(3, 'SHIPPED', CURRENT_DATE),
+(4, 'CANCELLED', CURRENT_DATE),
+(1, 'COMPLETED', CURRENT_DATE - 1);
+
+-- Insert sample data for order_items (line items within orders)
+INSERT INTO order_items (order_id, product_id, quantity, unit_price, total_amount) VALUES
+(1, 1, 1, 1200.00, 1200.00),         -- John's completed order: 1 laptop
+(1, 5, 2, 25.00, 50.00),             -- John's completed order: also has 2 mice
+(2, 2, 2, 800.00, 1600.00),          -- Jane's pending order: 2 smartphones
+(3, 3, 1, 150.00, 150.00),           -- Bob's shipped order: 1 desk chair
+(4, 4, 1, 90.00, 90.00),             -- Alice's cancelled order: 1 coffee maker
+(5, 5, 3, 25.00, 75.00),             -- John's older completed order: 3 mice
+(5, 3, 1, 150.00, 150.00);           -- John's older completed order: also has 1 chair
