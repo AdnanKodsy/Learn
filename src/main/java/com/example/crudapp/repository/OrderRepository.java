@@ -39,8 +39,8 @@ public class OrderRepository {
             jdbcTemplate.update(connection -> {
                 PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 ps.setLong(1, order.getUserId());
-                ps.setString(5, order.getOrderStatus());
-                ps.setDate(6, new Date(order.getOrderDate().getTime()));
+                ps.setString(2, order.getOrderStatus());
+                ps.setDate(3, new Date(order.getOrderDate().getTime()));
                 return ps;
             }, keyHolder);
             order.setId(keyHolder.getKey().longValue());
