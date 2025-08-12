@@ -86,4 +86,21 @@ public class OrderRepository {
         Integer count = jdbcTemplate.queryForObject(sql, Integer.class);
         return count != null ? count : 0;
     }
+
+    // Orders By specific user
+    public List<Order> getOrdersByUser(Long id){
+        String sql = "SELECT * FROM orders WHERE user_id = ?";
+        return jdbcTemplate.query(sql, orderMapper, id);
+    }
+
+    //update Order Status
+    public Order updateStatus(Long orderId, String status){
+        String sql = "UPDATE orders SET order_status = ? WHERE id = ?";
+        int rowsAffected = jdbcTemplate.update(sql, status, orderId);
+        if (rowsAffected > 0) {
+            return findById(orderId).orElse(null);
+        } else {
+            return null;
+        }
+    }
 }
