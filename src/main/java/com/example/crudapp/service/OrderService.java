@@ -60,7 +60,7 @@ public class OrderService {
             Optional<Product> productOpt = productRepository.findById(itemReq.getProductId());
 
             if (productOpt.isEmpty()) {
-                throw new RuntimeException("product not found with ID" + itemReq.getProductId());
+                throw new RuntimeException("product not found with ID " + itemReq.getProductId());
             }
 
             Product product = productOpt.get();
