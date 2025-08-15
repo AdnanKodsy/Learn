@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.crudapp.dto.OrderRequest;
 import com.example.crudapp.model.Order;
 import com.example.crudapp.service.OrderService;
 
@@ -51,5 +52,15 @@ public class OrderController {
     public ResponseEntity<Integer> ordersCount() {
         Integer count = orderService.orderCount();
         return ResponseEntity.ok(count);
+    }
+
+    @PostMapping("/complete")
+    public ResponseEntity<Order> createCompleteOrder(@RequestBody OrderRequest orderRequest) {
+        try {
+            Order createdOrder = orderService.createCompleteOrder(orderRequest);
+            return ResponseEntity.ok(createdOrder);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
