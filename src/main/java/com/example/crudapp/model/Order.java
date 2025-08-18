@@ -1,43 +1,77 @@
 package com.example.crudapp.model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+import jakarta.persistence.Version;
+
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
+@Entity
+@Table(name = "orders")
 @Getter
 @Setter
+@ToString(exclude = {"orderItems", "user"})
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Order {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @EqualsAndHashCode.Include
     private Long id;
-    private Long userId;
-    private String orderStatus;
-    private Date orderDate;
 
-    public Order() {
-    }
+    @Enumerated(EnumType.STRING)
+    @Column(name = "order_status", nullable = false)
+    private OrderStatus orderStatus;
 
-    public Order(Long userId, String orderStatus, Date orderDate) {
+    @Column(name = "order_date", nullable = false)
+    private LocalDateTime orderDate;
 
-        this.userId = userId;
+    public Order(User user, OrderStatus orderStatus, LocalDateTime orderDate) {
+        this.user = user;
         this.orderStatus = orderStatus;
         this.orderDate = orderDate;
     }
 
-    public Order(Long id, Long userId, String orderStatus, Date orderDate) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-        this.id = id;
-        this.userId = userId;
-        this.orderStatus = orderStatus;
-        this.orderDate = orderDate;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<OrderItem> orderItems = new ArrayList<>();
+
+    @Version
+    private Long version;
+
+    // Convenience helpers to maintain bidirectional relationship
+    public void addOrderItem(OrderItem item) {
+        orderItems.add(item);
+        item.setOrder(this);
     }
 
-    @Override
-    public String toString() {
-        return "Order{" +
-                "id=" + id +
-                ", userId=" + userId +
-                ", orderStatus=" + orderStatus + '\'' +
-                ", orderDate=" + orderDate +
-                "}";
+    public void removeOrderItem(OrderItem item) {
+        orderItems.remove(item);
+        item.setOrder(null);
     }
 }

@@ -3,9 +3,11 @@ package com.example.crudapp.model;
 import java.math.BigDecimal;
 import java.sql.Date;
 
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.Setter;
 
+@Entity
 @Getter
 @Setter
 public class Product {
