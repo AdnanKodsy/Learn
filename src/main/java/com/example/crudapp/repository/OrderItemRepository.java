@@ -1,14 +1,13 @@
 package com.example.crudapp.repository;
 
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
-
 import java.sql.ResultSet;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.example.crudapp.model.OrderItem;
 
@@ -21,8 +20,6 @@ public class OrderItemRepository {
     private final RowMapper<OrderItem> orderItemRowMapper = (ResultSet rs, int rowNum) -> {
         OrderItem orderItem = new OrderItem();
         orderItem.setId(rs.getLong("id"));
-        orderItem.setOrderId(rs.getLong("order_id"));
-        orderItem.setProductId(rs.getLong("product_id"));
         orderItem.setQuantity(rs.getInt("quantity"));
         orderItem.setUnitPrice(rs.getBigDecimal("unit_price"));
         orderItem.setTotalAmount(rs.getBigDecimal("total_amount"));
@@ -33,8 +30,6 @@ public class OrderItemRepository {
     public OrderItem save(OrderItem orderItem) {
         String sql = "INSERT INTO order_Items (order_id, product_id, quantity, unit_price, total_amount) VALUES (?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql,
-                orderItem.getOrderId(),
-                orderItem.getProductId(),
                 orderItem.getQuantity(),
                 orderItem.getUnitPrice(),
                 orderItem.getTotalAmount());
@@ -59,8 +54,6 @@ public class OrderItemRepository {
     public boolean update(OrderItem orderItem) {
         String sql = "UPDATE order_items SET order_id = ?, product_id = ?, quantity = ?, unit_price = ?, total_amount = ? WHERE id = ?";
         int rows = jdbcTemplate.update(sql,
-                orderItem.getOrderId(),
-                orderItem.getProductId(),
                 orderItem.getQuantity(),
                 orderItem.getUnitPrice(),
                 orderItem.getTotalAmount(),

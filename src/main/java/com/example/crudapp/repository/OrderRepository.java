@@ -25,8 +25,7 @@ public class OrderRepository {
     private final RowMapper<Order> orderMapper = (ResultSet rs, int rowNum) -> {
         Order order = new Order();
         order.setId(rs.getLong("id"));
-        order.setUserId(rs.getLong("user_id"));
-        order.setOrderStatus(rs.getString("order_status"));
+        order.setOrderStatus(rs.getObject(rowNum, Enum));
         order.setOrderDate(rs.getDate("order_date"));
         return order;
     };
