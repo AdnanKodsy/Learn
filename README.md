@@ -18,13 +18,28 @@ src/
 │   ├── java/com/example/crudapp/
 │   │   ├── CrudAppApplication.java      # Main application class
 │   │   ├── controller/
-│   │   │   └── UserController.java      # REST API endpoints
-│   │   ├── service/
-│   │   │   └── UserService.java         # Business logic layer
+│   │   │   ├── OrderController.java     # Order management endpoints
+│   │   │   ├── OrderItemController.java # Order item management endpoints
+│   │   │   ├── ProductController.java   # Product management endpoints
+│   │   │   └── UserController.java      # User management endpoints
+│   │   ├── dto/
+│   │   │   ├── OrderItemRequest.java    # Order item DTO for API requests
+│   │   │   └── OrderRequest.java        # Order DTO for API requests
+│   │   ├── model/
+│   │   │   ├── Order.java               # Order entity
+│   │   │   ├── OrderItem.java           # Order item entity
+│   │   │   ├── Product.java             # Product entity
+│   │   │   └── User.java                # User entity
 │   │   ├── repository/
-│   │   │   └── UserRepository.java      # Data access with raw SQL
-│   │   └── model/
-│   │       └── User.java                # User entity
+│   │   │   ├── OrderItemRepository.java # Order item data access with raw SQL
+│   │   │   ├── OrderRepository.java     # Order data access with raw SQL
+│   │   │   ├── ProductRepository.java   # Product data access with raw SQL
+│   │   │   └── UserRepository.java      # User data access with raw SQL
+│   │   └── service/
+│   │       ├── OrderItemService.java    # Order item business logic
+│   │       ├── OrderService.java        # Order business logic
+│   │       ├── ProductService.java      # Product business logic
+│   │       └── UserService.java         # User business logic
 │   └── resources/
 │       ├── application.properties       # Configuration
 │       ├── schema.sql                   # Database schema

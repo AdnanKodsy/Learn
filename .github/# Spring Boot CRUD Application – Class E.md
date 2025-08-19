@@ -126,6 +126,54 @@ All database operations use raw SQL via JdbcTemplate, following the project inst
 
 ---
 
+## Project folder structure
+
+```
+src/
+  main/
+    java/
+      com/
+        example/
+          crudapp/
+            CrudAppApplication.java
+            controller/
+              OrderController.java
+              OrderItemController.java
+              ProductController.java
+              UserController.java
+            dto/
+              OrderItemRequest.java
+              OrderRequest.java
+            model/
+              Order.java
+              OrderItem.java
+              Product.java
+              User.java
+            repository/
+              OrderItemRepository.java
+              OrderRepository.java
+              ProductRepository.java
+              UserRepository.java
+            service/
+              OrderItemService.java
+              OrderService.java
+              ProductService.java
+              UserService.java
+    resources/
+      application.properties
+      data.sql
+      schema.sql
+  test/
+    java/
+      com/
+        example/
+          crudapp/
+            controller/
+              UserControllerTest.java
+```
+
+--- 
+
 ## Summary Table
 
 | Class/File                | Purpose                                                        |
@@ -138,4 +186,4 @@ All database operations use raw SQL via JdbcTemplate, following the project inst
 | UserControllerTest.java   | Unit tests for the controller layer                            |
 | application.properties    | Application and database configuration                         |
 | schema.sql                | Database schema definition                                     |
-| data.sql                  | Sample data for
+| data.sql                  | Sample data for development and testing                        |
