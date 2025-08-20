@@ -16,8 +16,9 @@ import org.springframework.stereotype.Repository;
 
 import com.example.crudapp.model.Product;
 
-@Repository
-public class ProductRepository extends JpaRepository{
+//@Repository
+@Deprecated
+public class ProductRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

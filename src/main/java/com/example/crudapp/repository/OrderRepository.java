@@ -16,7 +16,8 @@ import org.springframework.stereotype.Repository;
 
 import com.example.crudapp.model.Order;
 
-@Repository
+//@Repository
+@Deprecated
 public class OrderRepository {
 
     @Autowired

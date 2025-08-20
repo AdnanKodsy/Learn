@@ -11,11 +11,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Repository;
 
 import com.example.crudapp.model.User;
 
-@Repository
+//@Repository
+@Deprecated
 public class UserRepository {
 
     @Autowired
@@ -37,7 +37,7 @@ public class UserRepository {
             // Insert new user
             String sql = "INSERT INTO users (name, email, age) VALUES (?, ?, ?)";
             KeyHolder keyHolder = new GeneratedKeyHolder();
-            
+
             jdbcTemplate.update(connection -> {
                 PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
                 ps.setString(1, user.getName());
@@ -45,7 +45,7 @@ public class UserRepository {
                 ps.setInt(3, user.getAge());
                 return ps;
             }, keyHolder);
-            
+
             user.setId(keyHolder.getKey().longValue());
             return user;
         } else {
