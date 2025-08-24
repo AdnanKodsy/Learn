@@ -1,25 +1,12 @@
 package com.example.crudapp.service;
 
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.example.crudapp.dto.OrderItemRequest;
-import com.example.crudapp.dto.OrderRequest;
-import com.example.crudapp.model.Order;
-import com.example.crudapp.model.OrderItem;
-import com.example.crudapp.model.Product;
-import com.example.crudapp.repository.OrderRepository;
-import com.example.crudapp.repository.ProductRepository;
 
 @Service
 public class OrderService {
-
+/*
     @Autowired
     private OrderRepository orderRepository;
     @Autowired
@@ -84,6 +71,6 @@ public class OrderService {
         }
         return savedOrder;
 
-    }
+    }*/
 
 }

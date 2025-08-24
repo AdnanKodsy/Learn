@@ -1,18 +1,14 @@
 package com.example.crudapp.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
 
-import com.example.crudapp.model.OrderItem;
-import com.example.crudapp.repository.OrderItemRepository;
 
 @Service
 public class OrderItemService {
 
-    @Autowired
+/*     @Autowired
     private OrderItemRepository orderItemRepository;
 
     // Create OrderItem
@@ -44,4 +40,5 @@ public class OrderItemService {
     public List<OrderItem> getOrderItemsByOrderId(Long orderId) {
         return orderItemRepository.getOrderItemsByOrderId(orderId);
     }
+*/
 }
