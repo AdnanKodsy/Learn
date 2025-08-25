@@ -1,18 +1,32 @@
 package com.example.crudapp.service;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.example.crudapp.dto.OrderItemRequest;
+import com.example.crudapp.dto.OrderRequest;
+import com.example.crudapp.model.Order;
+import com.example.crudapp.model.OrderItem;
+import com.example.crudapp.model.OrderStatus;
+import com.example.crudapp.model.Product;
+import com.example.crudapp.repository.OrderRepo;
+import com.example.crudapp.repository.ProductRepo;
 
 @Service
 public class OrderService {
-/*
+
     @Autowired
-    private OrderRepository orderRepository;
+    private OrderRepo orderRepository;
     @Autowired
     private OrderItemService orderItemService;
     @Autowired
-    private ProductRepository productRepository;
+    private ProductRepo productRepository;
 
     public Order saveOrder(Order order) {
         return orderRepository.save(order);
@@ -26,20 +40,16 @@ public class OrderService {
         return orderRepository.findById(id);
     }
 
-    public boolean deleteById(Long id) {
-        return orderRepository.deleteById(id);
-    }
-
-    public int orderCount() {
-        return orderRepository.getOrderCount();
+    public void deleteById(Long id) {
+        orderRepository.deleteById(id);
     }
 
     @Transactional
     public Order createCompleteOrder(OrderRequest request) {
         Order newOrder = new Order();
-        newOrder.setUserId(request.getUserId());
-        newOrder.setOrderStatus("pending");
-        newOrder.setOrderDate(new Date());
+        newOrder.setId(request.getUserId());
+        newOrder.setOrderStatus(OrderStatus.PENDING);
+        newOrder.setOrderDate(LocalDateTime.now());
 
         Order savedOrder = orderRepository.save(newOrder);
 
@@ -58,8 +68,8 @@ public class OrderService {
             OrderItem orderItem = new OrderItem();
             BigDecimal itemsTotal = product.getPrice().multiply(BigDecimal.valueOf(itemReq.getQuantity()));
 
-            orderItem.setOrderId(savedOrder.getId());
-            orderItem.setProductId(itemReq.getProductId());
+            orderItem.setOrder(savedOrder);
+            orderItem.setProduct(product);
             orderItem.setQuantity(itemReq.getQuantity());
             orderItem.setUnitPrice(product.getPrice());
             orderItem.setTotalAmount(itemsTotal);
@@ -71,6 +81,6 @@ public class OrderService {
         }
         return savedOrder;
 
-    }*/
+    }
 
 }

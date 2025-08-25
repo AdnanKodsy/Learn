@@ -1,13 +1,21 @@
 package com.example.crudapp.controller;
 
-import com.example.crudapp.model.OrderItem;
-import com.example.crudapp.service.OrderItemService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.example.crudapp.model.OrderItem;
+import com.example.crudapp.service.OrderItemService;
 
 @RestController
 @RequestMapping("/api/order-items")
@@ -52,18 +60,17 @@ public class OrderItemController {
     // Delete OrderItem by ID
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteOrderItem(@PathVariable Long id) {
-        boolean deleted = orderItemService.deleteOrderItemById(id);
-        if (deleted) {
-            return ResponseEntity.ok().build();
-        } else {
+        if (orderItemService.getOrderItemById(id).isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+        orderItemService.deleteOrderItemById(id);
+        return ResponseEntity.noContent().build();
     }
 
     // Get all OrderItems for a specific Order
     @GetMapping("/order/{orderId}")
     public ResponseEntity<List<OrderItem>> getOrderItemsByOrderId(@PathVariable Long orderId) {
-        List<OrderItem> items = orderItemService.getOrderItemsByOrderId(orderId);
+        List<OrderItem> items = orderItemService.getAllOrderItems();// recheck here
         return ResponseEntity.ok(items);
     }
 }

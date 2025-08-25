@@ -1,13 +1,19 @@
 package com.example.crudapp.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.crudapp.model.User;
+import com.example.crudapp.repository.UserRepo;
 
 @Service
 public class UserService {
-/*
+
     @Autowired
-    private UserRepository userRepository;
+    private UserRepo userRepository;
 
     // Create or update user
     public User saveUser(User user) {
@@ -26,7 +32,7 @@ public class UserService {
 
     // Search users by name
     public List<User> searchUsersByName(String name) {
-        return userRepository.findByNameContaining(name);
+        return userRepository.findByNameContainingIgnoreCase(name);
     }
 
     // Update user
@@ -43,11 +49,10 @@ public class UserService {
     }
 
     // Delete user
-    public boolean deleteUser(Long id) {
+    public void deleteUser(Long id) {
         if (userRepository.existsById(id)) {
-            return userRepository.deleteById(id);
+            userRepository.deleteById(id);
         }
-        return false;
     }
 
     // Check if user exists
@@ -59,5 +64,5 @@ public class UserService {
     public long getUserCount() {
         return userRepository.count();
     }
-  */  
+
 }

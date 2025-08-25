@@ -1,22 +1,24 @@
 package com.example.crudapp.controller;
 
-import com.example.crudapp.model.User;
-import com.example.crudapp.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Arrays;
+import java.util.Optional;
+
 import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.Mock;
+import static org.mockito.Mockito.when;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.Arrays;
-import java.util.Optional;
-
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import com.example.crudapp.model.User;
+import com.example.crudapp.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(UserController.class)
 public class UserControllerTest {
@@ -34,7 +36,7 @@ public class UserControllerTest {
     public void testGetAllUsers() throws Exception {
         User user1 = new User(1L, "John Doe", "john@example.com", 30);
         User user2 = new User(2L, "Jane Smith", "jane@example.com", 25);
-        
+
         when(userService.getAllUsers()).thenReturn(Arrays.asList(user1, user2));
 
         mockMvc.perform(get("/api/users"))
@@ -60,7 +62,7 @@ public class UserControllerTest {
     public void testCreateUser() throws Exception {
         User newUser = new User("John Doe", "john@example.com", 30);
         User savedUser = new User(1L, "John Doe", "john@example.com", 30);
-        
+
         when(userService.saveUser(any(User.class))).thenReturn(savedUser);
 
         mockMvc.perform(post("/api/users")

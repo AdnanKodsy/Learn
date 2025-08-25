@@ -44,14 +44,11 @@ public class OrderController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteOrderById(@PathVariable Long id) {
-        boolean deleted = orderService.deleteById(id);
-        return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
-    }
-
-    @GetMapping("/count")
-    public ResponseEntity<Integer> ordersCount() {
-        Integer count = orderService.orderCount();
-        return ResponseEntity.ok(count);
+        if (orderService.getOrderById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        orderService.deleteById(id); // void method
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/complete")

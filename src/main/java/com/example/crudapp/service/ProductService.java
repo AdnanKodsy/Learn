@@ -1,13 +1,19 @@
 package com.example.crudapp.service;
 
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.crudapp.model.Product;
+import com.example.crudapp.repository.ProductRepo;
 
 @Service
 public class ProductService {
-/*
+
     @Autowired
-    private ProductRepository productRepository;
+    private ProductRepo productRepository;
 
     public Product saveProduct(Product product) {
         return productRepository.save(product);
@@ -22,7 +28,7 @@ public class ProductService {
     }
 
     public List<Product> searchProductsByName(String productName) {
-        return productRepository.findByName(productName);
+        return productRepository.findByNameContainingIgnoreCase(productName);
     }
 
     public Optional<Product> updateProduct(Long id, Product productDetails) {
@@ -39,12 +45,12 @@ public class ProductService {
         return Optional.empty();
     }
 
-    public boolean deleteProduct(Long id) {
-        return productRepository.deleteById(id);
+    public void deleteProduct(Long id) {
+        productRepository.deleteById(id);
     }
 
     public Long getProductCount() {
-        return productRepository.countProducts();
+        return productRepository.count();
     }
-*/
+
 }

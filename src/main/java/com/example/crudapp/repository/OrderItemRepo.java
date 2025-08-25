@@ -10,6 +10,10 @@ import com.example.crudapp.model.OrderItem;
 @Repository
 public interface OrderItemRepo extends JpaRepository<OrderItem, Long> {
     List<OrderItem> findByOrderId(Long orderId);
+
     List<OrderItem> findByProductId(Long productId);
+
     long countByOrderId(Long orderId);
+
+    boolean updateOrderItem(OrderItem orderItem);
 }

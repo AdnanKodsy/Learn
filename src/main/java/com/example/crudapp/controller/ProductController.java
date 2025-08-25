@@ -56,8 +56,11 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProductById(@PathVariable Long id) {
-        boolean deletedProduct = productService.deleteProduct(id);
-        return deletedProduct ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+        if (productService.getProductById(id).isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        productService.deleteProduct(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/count")

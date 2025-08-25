@@ -12,13 +12,6 @@
     <artifactId>crud-app</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>crud-app</name>
-    <configuration>
-        <excludes>
-            <!-- Exclude the specific file from compilation -->
-            <exclude>**/com/example/crudapp/repository/OrderRepository.java</exclude>
-            <exclude>**/com/example/crudapp/repository/ProductRepository.java</exclude>
-        </excludes>
-    </configuration>
     <description>Spring Boot CRUD application with raw SQL</description>
     <properties>
         <java.version>17</java.version>
@@ -58,6 +51,19 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <!-- Exclude the specific file from compilation -->
+                        <exclude>**/com/example/crudapp/repository/D_OrderRepository.java</exclude>
+                        <exclude>**/com/example/crudapp/repository/D_ProductRepository.java</exclude>
+                        <exclude>**/com/example/crudapp/repository/D_OrderItemRepository.java</exclude>
+                        <exclude>**/com/example/crudapp/repository/D_UserRepository.java</exclude>
+                    </excludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>

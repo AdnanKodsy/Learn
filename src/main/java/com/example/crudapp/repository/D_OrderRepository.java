@@ -18,7 +18,7 @@ import com.example.crudapp.model.Order;
 
 //@Repository
 @Deprecated
-public class OrderRepository {
+public class D_OrderRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;

@@ -16,7 +16,7 @@ import com.example.crudapp.model.User;
 
 //@Repository
 @Deprecated
-public class UserRepository {
+public class D_UserRepository {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
