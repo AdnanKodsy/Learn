@@ -15,5 +15,5 @@ public interface OrderItemRepo extends JpaRepository<OrderItem, Long> {
 
     long countByOrderId(Long orderId);
 
-    boolean updateOrderItem(OrderItem orderItem);
+    //boolean updateOrderItem(OrderItem orderItem);
 }

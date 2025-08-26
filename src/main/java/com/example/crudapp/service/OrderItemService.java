@@ -31,8 +31,8 @@ public class OrderItemService {
     }
 
     // Update OrderItem
-    public boolean updateOrderItem(OrderItem orderItem) {
-        return orderItemRepository.updateOrderItem(orderItem);
+    public OrderItem updateOrderItem(OrderItem orderItem) {
+        return orderItemRepository.save(orderItem);
     }
 
     // Delete OrderItem by ID

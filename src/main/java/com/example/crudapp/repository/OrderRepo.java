@@ -8,5 +8,5 @@ import com.example.crudapp.model.Order;
 
 public interface OrderRepo extends JpaRepository<Order, Long> {
 
-    List<Order> getOrderByUser(Long id);
+    List<Order> findByUser_Id(Long userId);
 }
