@@ -15,11 +15,11 @@ INSERT INTO products (name, description, price, stock_quantity, category, create
 
 -- Insert sample data for orders (header info only)
 INSERT INTO orders (user_id, order_status, order_date) VALUES
-(1, 'COMPLETED', CURRENT_DATE),
+(1, 'SHIPPED', CURRENT_DATE),
 (2, 'PENDING', CURRENT_DATE),
-(3, 'SHIPPED', CURRENT_DATE),
+(3, 'PROCESSING', CURRENT_DATE),
 (4, 'CANCELLED', CURRENT_DATE),
-(1, 'COMPLETED', CURRENT_DATE - 1);
+(1, 'DELIVERED', CURRENT_DATE - 1);
 
 -- Insert sample data for order_items (line items within orders)
 INSERT INTO order_items (order_id, product_id, quantity, unit_price, total_amount) VALUES
