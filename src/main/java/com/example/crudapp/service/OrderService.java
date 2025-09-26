@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.crudapp.dto.OrderDTO;
+import com.example.crudapp.dto.OrderItemDTO;
 import com.example.crudapp.dto.OrderItemRequest;
 import com.example.crudapp.dto.OrderRequest;
+import com.example.crudapp.dto.UserDTO;
 import com.example.crudapp.model.Order;
 import com.example.crudapp.model.OrderItem;
 import com.example.crudapp.model.OrderStatus;
@@ -32,12 +35,44 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+    public List<OrderDTO> getAllOrders() {
+        return orderRepository.findAll().stream()
+                .map(this::mapToDTO)
+                .toList();
     }
 
-    public Optional<Order> getOrderById(Long id) {
-        return orderRepository.findById(id);
+    private OrderDTO mapToDTO(Order order) {
+        OrderDTO dto = new OrderDTO();
+        dto.setId(order.getId());
+        dto.setOrderStatus(order.getOrderStatus().name());
+        dto.setOrderDate(order.getOrderDate());
+
+        // map user
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(order.getUser().getId());
+        userDTO.setName(order.getUser().getName());
+        userDTO.setEmail(order.getUser().getEmail());
+        dto.setUser(userDTO);
+
+        // map order items
+        List<OrderItemDTO> itemDTOs = order.getOrderItems().stream()
+                .map(item -> {
+                    OrderItemDTO itemDTO = new OrderItemDTO();
+                    itemDTO.setId(item.getId());
+                    itemDTO.setProductId(item.getProduct().getId()); // adjust if different
+                    itemDTO.setQuantity(item.getQuantity());
+                    return itemDTO;
+                })
+                .toList();
+
+        dto.setOrderItems(itemDTOs);
+
+        return dto;
+    }
+
+    public Optional<OrderDTO> getOrderById(Long id) {
+        return orderRepository.findById(id)
+                .map(this::mapToDTO);
     }
 
     public void deleteById(Long id) {

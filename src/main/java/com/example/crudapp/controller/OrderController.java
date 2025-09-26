@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.crudapp.dto.OrderDTO;
 import com.example.crudapp.dto.OrderRequest;
 import com.example.crudapp.model.Order;
 import com.example.crudapp.service.OrderService;
@@ -31,14 +32,14 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Order>> getAllOrders() {
-        List<Order> orders = orderService.getAllOrders();
+    public ResponseEntity<List<OrderDTO>> getAllOrders() {
+        List<OrderDTO> orders = orderService.getAllOrders();
         return ResponseEntity.ok(orders);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
-        Optional<Order> order = orderService.getOrderById(id);
+    public ResponseEntity<OrderDTO> getOrderById(@PathVariable Long id) {
+        Optional<OrderDTO> order = orderService.getOrderById(id);
         return order.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
